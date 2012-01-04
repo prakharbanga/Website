@@ -1,0 +1,114 @@
+html, body {
+height: 100%;
+width: 100%;
+}
+
+body {
+margin: 0;
+padding: 0;
+color: #555;
+}
+
+div.background {
+display: none;
+}
+
+div.header {
+width: 80%;
+background: red;
+margin: auto auto;
+}
+
+
+#header {
+margin: auto auto;
+width: 100%;
+}
+
+div.wrapper {
+height: 100%;
+width: 75%;
+margin: 0% 15% 0% 10%;
+}
+
+div.inner_wrapper {
+width: 100%;
+margin: 0 0 0 0;
+}
+
+div.push {
+height: 12em;
+}
+
+div.bottom {
+height: 4em;
+margin: 0;
+padding: 0;
+width: 100%;
+text-align: center;
+}
+
+div.content {
+background: #eeeeee;
+clear: both;
+padding: 2.0em 20%;
+display: block;
+margin: 0 -6.67% 0 -4.44%;
+height: 100%;
+}
+
+div.inner_content {
+line-height: 160%;
+margin: auto auto;
+}
+
+div.inactive {
+display: none;
+}
+
+div.toc_div {
+width: 100%;
+display: block;
+float: left;
+clear: both;
+}
+
+ul#toc {
+list-style: none;
+clear: left;
+float: left;
+padding: 0.8em 0 0.5em 0;
+margin: 0;
+}
+
+ul#toc li {
+display: block;
+float: left;
+padding: 0.5em 0 0 0;
+}
+
+ul#toc li a {
+color: #555;
+padding: 0.5em 0.7em 0.5em 0.7em;
+margin: 0 0.5em 0 0.5em;
+text-decoration: none;
+}
+
+ul#toc li a:focus {
+outline: 0;
+color: #993700;
+}
+
+ul#toc li a:hover {
+color: #b34000;
+}
+
+ul#toc li a.active {
+color: #e50;
+background: #eee;
+border-bottom: 1px solid #eee;
+}
+
+img.validation {
+height: 2em;
+}
