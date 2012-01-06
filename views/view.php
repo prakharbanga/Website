@@ -84,7 +84,7 @@
 
 </div>
 
-<img id="content_bg" src="./views/content.bmp" />
+<img class="content_bg" src="./views/content.bmp" alt="" />
 
 </div>
 

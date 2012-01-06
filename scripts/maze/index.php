@@ -27,6 +27,11 @@ $cell_width = 5;
 $cell_height = 5;
 $stroke_width = 1;
 $em_per_unit = 0.15;
+
+$t_width = ($cell_width*$cols+$stroke_width);
+
+$t_height = ($cell_height*$rows+$stroke_width);
+
 $pointer_radius = 1.5;
 $initial_pointer_x = 0;
 $initial_pointer_y = 0;
@@ -35,11 +40,9 @@ $solution_initially = "false";
 
 $scroll_pixels = 5;
 
-$last_line = "$cell_cols," . ($cell_rows-1) . "v";
-
 $im = array();
 
-exec("ruby ./scripts/maze/maze.rb $cell_rows $cell_cols $cell_width $cell_height $stroke_width $em_per_unit $pointer_radius $initial_pointer_x $initial_pointer_y $solution_width $solution_initially", $im);
+exec("ruby ./scripts/maze/maze.rb $cell_rows $cell_cols $cell_width $cell_height", $im);
 
 $sol_hide_string = "Hide solution";
 $sol_show_string = "Show solution";
@@ -53,6 +56,8 @@ if(isset($_GET['back'])) {
 } else {
     $back_link = "";
 }
+
+$level_value = "?script=" . $_GET['script'] . ( isset($_GET['back']) ? ( "&amp;back=" . $_GET['back'] ) : "" );
 
 require("./views/maze_view.php");
 

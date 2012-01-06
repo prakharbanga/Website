@@ -75,7 +75,7 @@ margin: auto auto;
 max-width: 30em;
 }
 
-#content_bg {
+.content_bg {
 z-index: -1;
 position: absolute;
 left: -8.89%;

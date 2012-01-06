@@ -81,51 +81,26 @@ class Maze
 
   CELL_WIDTH = ARGV[2].to_i
   CELL_HEIGHT = ARGV[3].to_i
-  STROKE_WIDTH = ARGV[4].to_i
-  EM_PER_UNIT = ARGV[5].to_f
-  POINTER_RADIUS = ARGV[6].to_i
-  INITIAL_POINTER_X = ARGV[7].to_i
-  INITIAL_POINTER_Y = ARGV[8].to_i
-  SOLUTION_WIDTH = ARGV[9].to_i
-  SOLUTION_INITIALLY = ARGV[10] == "true"
 
   def to_svg
-    "\n<svg id=\"image\" xmlns=\"http://www.w3.org/2000/svg\"" <<
-    " xmlns:xlink=\"http://www.w3.org/1999/xlink\"" <<
-    " viewBox=\"0 0" <<
-    " #{ t_width = CELL_WIDTH*@cols + STROKE_WIDTH }" <<
-    " #{ t_height = CELL_HEIGHT*@rows + STROKE_WIDTH }\"" <<
-    " width=\"#{ t_width*EM_PER_UNIT }em\"" <<
-    " height=\"#{ t_height*EM_PER_UNIT }em\"" <<
-    ">" <<
-    "\n<polyline id=\"solution\" visibility=\"#{ SOLUTION_INITIALLY ? "visible" : "hidden" }\" points=\"" <<
-    @solution.collect { |point|
-        "#{CELL_WIDTH*(point[0]+0.5)},#{CELL_HEIGHT*(point[1]+0.5)}"
-    }.intersperse(" ").join <<
-    "\" style=\"fill:none;stroke:rgb(255,255,0);stroke-width:#{SOLUTION_WIDTH}\"" <<
-    " />" <<
-    "\n<g id=\"group\" transform=\"translate(#{STROKE_WIDTH/2.0}, #{STROKE_WIDTH/2.0})\"" <<
-    ">" <<
-    "\n<circle id=\"pointer\"" <<
-    " cx=\"#{CELL_WIDTH*(INITIAL_POINTER_X+0.5)}\"" <<
-    " cy=\"#{CELL_HEIGHT*(INITIAL_POINTER_Y+0.5)}\"" <<
-    " r=\"#{POINTER_RADIUS}\" fill=\"red\"" <<
-    " />" <<
-    @grid.each_with_index.collect { |col, ci|
+    svg_list = @grid.each_with_index.collect { |col, ci|
       col.each_with_index.collect { |cell, ri|
         [[[1, 0], [0, 0]], [[0, 0], [0, 1]], [[0, 1], [1, 1]], [[1, 1], [1, 0]]].select.with_index { |edge, i|
           (i!=2 || ri==@rows-1) && (i!=3 || ci==@cols-1) && cell.sides[i][:wall].value
         }.collect { |c1, c2|
-          "\n<line id=\"#{[ci, ri].math_op(c1.math_op(c2, :+).map { |x| x/2 }, :+).to_custom_s}" <<
+          "id=\"#{[ci, ri].math_op(c1.math_op(c2, :+).map { |x| x/2 }, :+).to_custom_s}" <<
             ["v", "h"][c1.common(c2)[0]] << "\"" <<
             " x1=\"#{CELL_WIDTH*(ci+c1[0])}\" y1=\"#{CELL_HEIGHT*(ri+c1[1])}\"" <<
-            " x2=\"#{CELL_WIDTH*(ci+c2[0])}\" y2=\"#{CELL_HEIGHT*(ri+c2[1])}\"" <<
-            " style=\"stroke-linecap:square;stroke:rgb(0,0,0);stroke-width:#{STROKE_WIDTH}\" />"
+            " x2=\"#{CELL_WIDTH*(ci+c2[0])}\" y2=\"#{CELL_HEIGHT*(ri+c2[1])}\""
         }
       }
-    }.join << 
-    "\n</g>" <<
-    "\n</svg>"
+    }.flatten.unshift(
+        @solution.collect { |point|
+                "#{CELL_WIDTH*(point[0]+0.5)},#{CELL_HEIGHT*(point[1]+0.5)}"
+        }.intersperse(" ").join
+    )
+    svg_list.intersperse("\n").join
+
   end
 
 end
