@@ -40,9 +40,13 @@ $solution_initially = "false";
 
 $scroll_pixels = 5;
 
+require('./scripts/maze/maze.php');
+
 $im = array();
 
-exec("ruby ./scripts/maze/maze.rb $cell_rows $cell_cols $cell_width $cell_height", $im);
+$mz = new Maze($rows, $cols, $cell_width, $cell_height);
+
+$mz->write_to($im);
 
 $sol_hide_string = "Hide solution";
 $sol_show_string = "Show solution";

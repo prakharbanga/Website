@@ -13,6 +13,22 @@ The maze
 var pointer_x = <?= $initial_pointer_x ?>;
 var pointer_y = <?= $initial_pointer_y ?>;
 
+var pointer_lock = false;
+
+function attempt_lock_pointer() {
+    if(!pointer_lock) {
+        pointer_lock = true;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function unlock_pointer() {
+    pointer_lock = false;
+}
+
 document.onkeydown = keyPressHandler; 
 
 function keyPressHandler(e) { 
@@ -23,48 +39,109 @@ function keyPressHandler(e) {
     if(k==38 || k==75) { 
         e.preventDefault(); 
         if(document.getElementById(pointer_x+','+pointer_y+'h') == null) { 
-            pointer_y -= 1; 
+            move_pointer_up();
         } 
         else { 
-            window.scrollBy(0, -<?= $scroll_pixels ?>); 
+            scroll_window_up();
         } 
     } 
     if(k==40 || k==74) { 
         e.preventDefault(); 
         if(document.getElementById(pointer_x+','+(pointer_y+1)+'h') == null) { 
-            pointer_y += 1; 
+            move_pointer_down();
         } 
         else { 
-            window.scrollBy(0, <?= $scroll_pixels ?>); 
+            scroll_window_down();
         } 
     } 
     if(k==37 || k==72) { 
         e.preventDefault(); 
         if(document.getElementById(pointer_x+','+pointer_y+'v') == null) { 
-            pointer_x -= 1; 
+            move_pointer_left();
         } 
         else { 
-            window.scrollBy(-<?= $scroll_pixels ?>, 0); 
+            scroll_window_left();
         } 
     } 
     if(k==39 || k==76) { 
         e.preventDefault(); 
         if(document.getElementById((pointer_x+1)+','+pointer_y+'v') == null) { 
-            pointer_x += 1; 
+            move_pointer_right();
         } 
         else { 
-            window.scrollBy(<?= $scroll_pixels ?>, 0); 
+            scroll_window_right();
         } 
     } 
-    refresh_pointer(); 
 } 
+
+function scroll_window_up() {
+    if(!attempt_lock_pointer) return;
+    window.scrollBy(0, -<?= $scroll_pixels ?>);
+    unlock_pointer();
+}
+
+function scroll_window_down() {
+    if(!attempt_lock_pointer) return;
+    window.scrollBy(0, <?= $scroll_pixels ?>);
+    unlock_pointer();
+}
+
+function scroll_window_left() {
+    if(!attempt_lock_pointer) return;
+    window.scrollBy(-<?= $scroll_pixels ?>, 0);
+    unlock_pointer();
+}
+
+function scroll_window_right() {
+    if(!attempt_lock_pointer) return;
+    window.scrollBy(<?= $scroll_pixels ?>, 0);
+    unlock_pointer();
+}
+
+var speed = 1;
+
+function move_pointer_up() {
+    if(!attempt_lock_pointer) return;
+    for(var i=0; i<(1/speed); i++) {
+		pointer_y -= speed;
+        refresh_pointer();
+	}
+    unlock_pointer();
+}
+
+function move_pointer_down() {
+    if(!attempt_lock_pointer) return;
+    for(var i=0; i<(1/speed); i++) {
+		pointer_y += speed;
+        refresh_pointer();
+	}
+    unlock_pointer();
+}
+
+function move_pointer_left() {
+    if(!attempt_lock_pointer) return;
+    for(var i=0; i<(1/speed); i++) {
+		pointer_x -= speed;
+        refresh_pointer();
+	}
+    unlock_pointer();
+}
+
+function move_pointer_right() {
+    if(!attempt_lock_pointer) return;
+    for(var i=0; i<(1/speed); i++) {
+		pointer_x += speed;
+        refresh_pointer();
+	}
+    unlock_pointer();
+}
 
 var to_show_congrats = true;
 
 function refresh_pointer() { 
     var pointer = document.getElementById('pointer'); 
     pointer.setAttributeNS(null, "cx", <?= $cell_width ?>*(pointer_x+0.5)); 
-        pointer.setAttributeNS(null, "cy", <?= $cell_height ?>*(pointer_y+0.5)); 
+    pointer.setAttributeNS(null, "cy", <?= $cell_height ?>*(pointer_y+0.5)); 
     if(to_show_congrats && pointer_x == <?= $cell_cols-1 ?> && pointer_y == <?= $cell_rows-1 ?>) {
         alert("Congratulations. You did it.");
         to_show_congrats = false;
@@ -76,18 +153,18 @@ var solution = <?= $solution_initially ?>;
 
 function toggle_solution() { 
     var new_value = solution ? "hidden" : "visible";
-        var new_display = solution ? "<?= $sol_show_string ?>" : "<?= $sol_hide_string ?>";
-        solution = !solution; 
+    var new_display = solution ? "<?= $sol_show_string ?>" : "<?= $sol_hide_string ?>";
+    solution = !solution; 
     sol_line = document.getElementById("solution"); 
-        sol_line.setAttributeNS(null, "visibility", new_value); 
-        sol_button = document.getElementById("sol_button"); 
-        sol_button.setAttributeNS(null, "value", new_display);
+    sol_line.setAttributeNS(null, "visibility", new_value); 
+    sol_button = document.getElementById("sol_button"); 
+    sol_button.setAttributeNS(null, "value", new_display);
 
-        pointer = document.getElementById("pointer");
-        if(to_show_congrats) {
-            to_show_congrats = false;
-            pointer.setAttributeNS(null, "fill", "rgb(0,0,255)");
-        }
+    pointer = document.getElementById("pointer");
+    if(to_show_congrats) {
+        to_show_congrats = false;
+        pointer.setAttributeNS(null, "fill", "rgb(0,0,255)");
+    }
 }
 
 function choose(select) {

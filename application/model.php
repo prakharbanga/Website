@@ -5,7 +5,7 @@ function get_content()
     $home_content = new html('Hello and welcome to my homepage. Although it is still in its infancy, I hope you find all the information you need. Feel free to use the tabs above for browsing through the site.');
     $about_me_content = new html('I am currently in the third year of my 5-year B.Tech+M.Tech integrated programme at the Department of Computer Science and Engineering, IIT Kanpur.');
     $about_me_content->put('p');
-    $about_me_content->put('I like programming, or things related to programming and I am pleased to see things I programmed that work perfectly. I also like philosophy and criticially examining most things we take for granted and that is why I rapidly change my views on any subject in life. In fact, I like logically thinking about anything and working out new and innovative solutions, whether it is a math problem or a real-life one. I also like swimming as a way to cool down in the summer. And last but not the least, I like people who are like me. :)');
+    $about_me_content->put('I like programming, or things related to programming and I am pleased to see things I programmed that work perfectly. I also like philosophy and criticially examining most things we take for granted and that is why I rapidly change my views on any subject in life. In fact, I like logically thinking about anything and working out new and innovative solutions, whether it is a math problem or a real-life one. I also like swimming as a way to cool down in the summer.');
     $my_work_content = new html('You can find my resume ');
     $my_work_content->put('here', 'a', array(
                                     array(
