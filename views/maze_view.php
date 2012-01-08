@@ -136,7 +136,7 @@ function refresh_pointer() {
     pointer.setAttributeNS(null, "cx", <?= $cell_width ?>*(pointer_x+0.5)); 
     pointer.setAttributeNS(null, "cy", <?= $cell_height ?>*(pointer_y+0.5)); 
     if(to_show_congrats && pointer_x == <?= $cell_cols-1 ?> && pointer_y == <?= $cell_rows-1 ?>) {
-        alert("Congratulations. You did it.");
+        alert("Congratulations.");
         to_show_congrats = false;
         pointer.setAttributeNS(null, "fill", "rgb(0,255,0)");
     }
@@ -217,8 +217,9 @@ echo "</svg>\n";
                       array(40, 80),
                       array(45, 90)); ?>
 <p>
+Too easy or too hard?
 <select name="choose_level" onchange="choose(this)">
-<option>Choose a size</option>
+<option>Choose another size</option>
 <?php foreach($levels as $level): ?>
 <option value="<?= $level_value ?>&rows=<?= $level[0] ?>&cols=<?= $level[1] ?>"><?= $level[0] ?>x<?= $level[1] ?></option>
 <?php endforeach; ?>
