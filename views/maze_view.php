@@ -8,6 +8,7 @@
 <title>
 The maze
 </title>
+<?php if($to_have_maze): ?>
 <script type="text/javascript"> 
 
 var pointer_x = <?= $initial_pointer_x ?>;
@@ -102,37 +103,29 @@ var speed = 1;
 
 function move_pointer_up() {
     if(!attempt_lock_pointer) return;
-    for(var i=0; i<(1/speed); i++) {
-		pointer_y -= speed;
-        refresh_pointer();
-	}
+    pointer_y -= speed;
+    refresh_pointer();
     unlock_pointer();
 }
 
 function move_pointer_down() {
     if(!attempt_lock_pointer) return;
-    for(var i=0; i<(1/speed); i++) {
-		pointer_y += speed;
-        refresh_pointer();
-	}
+    pointer_y += speed;
+    refresh_pointer();
     unlock_pointer();
 }
 
 function move_pointer_left() {
     if(!attempt_lock_pointer) return;
-    for(var i=0; i<(1/speed); i++) {
-		pointer_x -= speed;
-        refresh_pointer();
-	}
+    pointer_x -= speed;
+    refresh_pointer();
     unlock_pointer();
 }
 
 function move_pointer_right() {
     if(!attempt_lock_pointer) return;
-    for(var i=0; i<(1/speed); i++) {
-		pointer_x += speed;
-        refresh_pointer();
-	}
+    pointer_x += speed;
+    refresh_pointer();
     unlock_pointer();
 }
 
@@ -174,9 +167,11 @@ function choose(select) {
 }
 
 </script> 
+<?php endif; ?>
 </head> 
 <body> 
 
+<?php if($to_have_maze): ?>
 <p>
 This page displays and works alright in the latest versions of Firefox, Google Chrome and Opera. Javascript is required to play the game.
 </p>
@@ -216,17 +211,25 @@ echo "</svg>\n";
 <input id="sol_button" type="button" value="<?= $sol_button_initial_value ?>" onclick="toggle_solution()" />
 </p>
 
+<?php $levels = array(array(20, 20),
+                      array(30, 40),
+                      array(40, 60),
+                      array(40, 80),
+                      array(45, 90)); ?>
 <p>
 <select name="choose_level" onchange="choose(this)">
-<option>Choose a level</option>
-<option value="<?= $level_value ?>&rows=20&cols=20">Very easy</option>
-<option value="<?= $level_value ?>&rows=30&cols=40">Easy</option>
-<option value="<?= $level_value ?>&rows=50&cols=70">Average</option>
-<option value="<?= $level_value ?>&rows=90&cols=110">Hard</option>
-<option value="<?= $level_value ?>&rows=130&cols=200">Pretty hard</option>
-<option value="<?= $level_value ?>&rows=200&cols=200">Don't try this at home</option>
+<option>Choose a size</option>
+<?php foreach($levels as $level): ?>
+<option value="<?= $level_value ?>&rows=<?= $level[0] ?>&cols=<?= $level[1] ?>"><?= $level[0] ?>x<?= $level[1] ?></option>
+<?php endforeach; ?>
 </select>
 </p>
+
+<?php else: ?>
+<p>
+Sorry, but really large mazes put too much load on the server. I might solve this problem in the near future.
+</p>
+<?php endif; ?>
 
 <p>
 <?= $back_link ?>
