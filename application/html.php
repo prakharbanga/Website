@@ -5,12 +5,12 @@ class html
     private $html = array();
     private $parent = null;
 
-    function __construct($inner, $type='text', $attrs=array())
+    function __construct($inner='', $type='no_tag', $attrs=array())
     {
         $this->put($inner, $type, $attrs);
     }
 
-    public function put($inner, $type='text', $attrs=array())
+    public function put($inner, $type='no_tag', $attrs=array())
     {
         array_push($this->html, array(
                     'type' => $type,
@@ -24,7 +24,7 @@ class html
         foreach ($this->html as $tag) {
             $to_add = '';
             switch($tag['type']) {
-                case 'text':
+                case 'no_tag':
                     switch($tag['inner']) {
                         case 'newline':
                             $to_add .= '<br />';
@@ -33,7 +33,7 @@ class html
                             $to_add .= '<p />';
                             break;
                         default:
-                            $to_add .= ($tag['inner']);
+                            $to_add .= (!is_string($tag['inner'])) ? ($tag['inner']->render($this)) : ($tag['inner']);
                     }
                     break;
                 default:

@@ -1,11 +1,13 @@
 <?php
 
+$to_have_maze = true;
+
 $rows = 20;
 if(isset($_GET['rows'])) {
     $rows_t = $_GET['rows'];
     if(filter_var($rows_t, FILTER_VALIDATE_INT,
                 array("options"=>
-                    array("min_range"=>1, "max_range"=>200)))) {
+                    array("min_range"=>1)))) {
         $rows = $rows_t;
     }
 }
@@ -16,9 +18,13 @@ if(isset($_GET['cols'])) {
     $cols_t = $_GET['cols'];
     if(filter_var($cols_t, FILTER_VALIDATE_INT,
                 array("options"=>
-                    array("min_range"=>1, "max_range"=>200)))) {
+                    array("min_range"=>1)))) {
         $cols = $cols_t;
     }
+}
+
+if($rows*$cols > 4100) {
+    $to_have_maze = false;
 }
 
 $cell_rows = $rows;
@@ -40,13 +46,17 @@ $solution_initially = "false";
 
 $scroll_pixels = 5;
 
-require('./scripts/maze/maze.php');
+if($to_have_maze) {
 
-$im = array();
+    require('./scripts/maze/maze.php');
 
-$mz = new Maze($rows, $cols, $cell_width, $cell_height);
+    $im = array();
 
-$mz->write_to($im);
+    $mz = new Maze($rows, $cols, $cell_width, $cell_height);
+
+    $mz->write_to($im);
+    
+}
 
 $sol_hide_string = "Hide solution";
 $sol_show_string = "Show solution";
@@ -61,7 +71,7 @@ if(isset($_GET['back'])) {
     $back_link = "";
 }
 
-$level_value = "?script=" . $_GET['script'] . ( isset($_GET['back']) ? ( "&amp;back=" . $_GET['back'] ) : "" );
+$level_value = "?script=" . $_GET['script'] . ( isset($_GET['back']) ? ( "&back=" . $_GET['back'] ) : "" );
 
 require("./views/maze_view.php");
 

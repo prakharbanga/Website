@@ -8,8 +8,9 @@
 <title>
 The maze
 </title>
-<?php if($to_have_maze): ?>
 <script type="text/javascript"> 
+
+<?php if($to_have_maze): ?>
 
 var pointer_x = <?= $initial_pointer_x ?>;
 var pointer_y = <?= $initial_pointer_y ?>;
@@ -160,14 +161,20 @@ function toggle_solution() {
     }
 }
 
+<?php endif; ?>
+
 function choose(select) {
     if(select.value != null) {
         location = select.value;
     }
 }
 
+function choose_rows_cols(rows, cols) {
+    to_go_to = "<?= $level_value ?>&rows=" + rows + "&cols=" + cols;
+    location = to_go_to;
+}
+
 </script> 
-<?php endif; ?>
 </head> 
 <body> 
 
@@ -211,13 +218,24 @@ echo "</svg>\n";
 <input id="sol_button" type="button" value="<?= $sol_button_initial_value ?>" onclick="toggle_solution()" />
 </p>
 
+<p>
+Too easy or too hard?
+
+<?php else: ?>
+
+<p>
+<p>
+Sorry, but really large mazes put too much load on the server. I might solve this problem in the near future.
+</p>
+
+<?php endif; ?>
+
 <?php $levels = array(array(20, 20),
                       array(30, 40),
                       array(40, 60),
                       array(40, 80),
                       array(45, 90)); ?>
-<p>
-Too easy or too hard?
+
 <select name="choose_level" onchange="choose(this)">
 <option>Choose another size</option>
 <?php foreach($levels as $level): ?>
@@ -225,12 +243,9 @@ Too easy or too hard?
 <?php endforeach; ?>
 </select>
 </p>
-
-<?php else: ?>
-<p>
-Sorry, but really large mazes put too much load on the server. I might solve this problem in the near future.
-</p>
-<?php endif; ?>
+Or choose custom size: 
+<input id="rows_text" type="text">x<input id="cols_text" type="text">
+<button onclick="choose_rows_cols(document.getElementById('rows_text').value, document.getElementById('cols_text').value)">Go!</button>
 
 <p>
 <?= $back_link ?>
