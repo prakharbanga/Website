@@ -8,20 +8,20 @@ function get_content()
     $some_programs_content = new html();
     $contact_me_content = new html();
 
-    $hello = new html('Hello and welcome to my homepage. Although it is still in its infancy, I hope you find all the information you need. Feel free to use the tabs above for browsing.', 'p');
+    $hello = new html('Hello and welcome to my homepage. Although it is still in its infancy, I hope you find all the information you need. Feel free to use the tabs above for browsing.');
     
-    $home_content->put($hello);
+    $home_content->put($hello, 'p');
 
-    $college = new html('I am currently in the third year of my 5-year B.Tech+M.Tech integrated programme at the Department of Computer Science and Engineering, IIT Kanpur.', 'p');
-    $hobbies = new html('I like programming and I am pleased to see things I programmed that work perfectly. I also like philosophy and criticially examining most things we take for granted and that is why I rapidly change my views on any subject in life. In fact, I like logically thinking about anything and working out new and innovative solutions, whether it is a math problem or a real-life one. Occasionally I like to swim, skate and watch interesting documentaries or shows related to science, technology or the environment.', 'p');
+    $college = new html('I am currently in the third year of my 5-year B.Tech+M.Tech integrated programme at the Department of Computer Science and Engineering, IIT Kanpur.');
+    $hobbies = new html('I like programming and I am pleased to see things I programmed that work perfectly. I also like philosophy and criticially examining most things we take for granted and that is why I rapidly change my views on any subject in life. In fact, I like logically thinking about anything and working out new and innovative solutions, whether it is a math problem or a real-life one. Occasionally I like to swim, skate and watch interesting documentaries or shows related to science, technology or the environment.');
 
-    $about_me_content->put($college);
-    $about_me_content->put($hobbies);
+    $about_me_content->put($college, 'p');
+    $about_me_content->put($hobbies, 'p');
 
     $proj_outer = new html('My major projects include:');
     $proj_list = new html();
 
-    $aurus_android = new html('Content Management System for Android:', 'b');
+    $aurus_android = new html('Content Management System for Android:', 'strong');
     $aurus_android->put('newline');
     $aurus_android->put('May-July 2011', 'em');
     $aurus_android->put('newline');
@@ -35,14 +35,14 @@ function get_content()
     $aurus_android->put('Project supervisor: Mr. Sujeet Kumar, VP Engineering, Aurus Network Infotech Pvt. Ltd.', 'em');
 
 
-    $aurus_flex = new html('Bookmarks Component for Flex(Flash) application:', 'b');
+    $aurus_flex = new html('Bookmarks Component for Flex(Flash) application:', 'strong');
     $aurus_flex->put('newline');
     $aurus_flex->put('May 2011', 'em');
     $aurus_flex->put('newline');
     $aurus_flex->put('The project involved first designing an interactive component for the ');
     $aurus_flex->put('Aurus Video Client', 'a',
                     array(array('name' => 'href',
-                                'value' => 'http://www.aurusnet.com/index.php?r=site/page&view=livestudios')));
+                                'value' => 'http://www.aurusnet.com/index.php?r=site/page&amp;view=livestudios')));
     $aurus_flex->put(' using Flash Builder platform, and then incorporating it in the existing video client.');
     $aurus_flex->put('newline');
     $aurus_flex->put('Project supervisor: Mr. Sujeet Kumar, VP Engineering, Aurus Network Infotech Pvt. Ltd.', 'em');
@@ -64,7 +64,7 @@ function get_content()
 
     $research_interests = new html('My major areas of interest include programming languages especially the Object-oriented ones like Java, Ruby and Smalltalk; analysis of programs; object-oriented methods of software construction(like the MVC pattern, which this site uses) and methods like refactoring of code.');
 
-    $my_work_content->put($proj_outer, 'p');
+    $my_work_content->put($proj_outer);
     $my_work_content->put($resume, 'p');
     $my_work_content->put($research_interests, 'p');
 
@@ -78,7 +78,7 @@ function get_content()
                     )
                     ), 'li');
     $progs->put($progs_list, 'ul');
-    $some_programs_content->put($progs, 'p');
+    $some_programs_content->put($progs);
 
     $email = new html('You can contact me through e-mail: ');
     $email->put('newline');
@@ -87,7 +87,7 @@ function get_content()
     $mails->put('prakban@cse.iitk.ac.in', 'li');
     $email->put($mails, 'ul');
 
-    $contact_me_content->put($email, 'p');
+    $contact_me_content->put($email);
 
     return array(
             'page_title' => 'Prakhar Banga\'s homepage',

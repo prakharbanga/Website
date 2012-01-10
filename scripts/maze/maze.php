@@ -156,7 +156,7 @@ class Maze {
 
                     $dir = ($c1[0] == $c2[0]) ? "v" : "h";
 
-                    $id = $cx . "," . $cy . $dir;
+                    $id = $dir . $cx . "_" . $cy;
 
                     $x1 = $this->cell_width*($ci+$c1[0]);
                     $x2 = $this->cell_width*($ci+$c2[0]);
